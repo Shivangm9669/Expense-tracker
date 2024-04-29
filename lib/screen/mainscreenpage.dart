@@ -1,5 +1,6 @@
 import 'package:expense_tracker/class/expense.dart';
 import 'package:expense_tracker/widgets/add_expense.dart';
+import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenseitem.dart';
 import 'package:flutter/material.dart';
 
@@ -107,12 +108,18 @@ class _ExpenseTrackerMainPageState extends State<ExpenseTrackerMainPage> {
               child: ExpenseInfo(expense: _expensesList[index])));
     }
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Expense Tracker'),
-          actions: [
-            IconButton(onPressed: addExpense, icon: const Icon(Icons.add))
-          ],
+      appBar: AppBar(
+        title: const Text('Expense Tracker'),
+        actions: [
+          IconButton(onPressed: addExpense, icon: const Icon(Icons.add))
+        ],
+      ),
+      body: Column(children: [
+        Chart(expenses: _expensesList),
+        Expanded(
+          child: mainContent,
         ),
-        body: mainContent);
+      ]),
+    );
   }
 }

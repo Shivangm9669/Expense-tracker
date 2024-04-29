@@ -12,7 +12,6 @@ var categoryIcon = {
   Categorys.work: Icons.work
 };
 
-
 enum Categorys { travel, food, lesiure, work }
 
 class Expenses {
@@ -31,5 +30,27 @@ class Expenses {
 
   get formattedDate {
     return formatter.format(expenseDate);
+  }
+}
+
+class ExpenseBucket {
+  const ExpenseBucket({required this.category, required this.expenses});
+
+  final List<Expenses> expenses;
+  final Categorys category;
+
+  ExpenseBucket.forCategory(List<Expenses> allExpenses, this.category)
+      : expenses = allExpenses
+            .where((expense) => expense.expenseCategory == category)
+            .toList();
+
+  double get totalExpense {
+    double sum = 0;
+
+    for (final expense in expenses) {
+      sum += expense.expenseAmount;
+    }
+
+    return sum;
   }
 }

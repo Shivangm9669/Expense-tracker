@@ -15,7 +15,7 @@ class AddExpenses extends StatefulWidget {
 class _AddExpensesState extends State<AddExpenses> {
   final _textcontroller = TextEditingController();
   final _amountcontroller = TextEditingController();
-  DateTime ?_selectedDate ;
+  DateTime _selectedDate = DateTime.now();
   Categorys _selectedCategories = Categorys.food;
 
   @override
@@ -30,9 +30,7 @@ class _AddExpensesState extends State<AddExpenses> {
     void addExpenseToList() {
       final validAmount = double.tryParse(_amountcontroller.text);
       final isVaild = validAmount == null || validAmount <= 0;
-      if (isVaild ||
-          _textcontroller.text.trim().isEmpty ||
-          _selectedDate == null) {
+      if (isVaild || _textcontroller.text.trim().isEmpty) {
         showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -55,7 +53,7 @@ class _AddExpensesState extends State<AddExpenses> {
         );
       } else {
         widget.editList(_textcontroller, _amountcontroller, _selectedCategories,
-            _selectedDate!);
+            _selectedDate);
 
         Navigator.pop(context);
       }
@@ -66,10 +64,13 @@ class _AddExpensesState extends State<AddExpenses> {
       final firstDate = DateTime(now.year - 1, now.month, now.day);
       final lastDate = now;
       final pickedDate = await showDatePicker(
-          context: context, firstDate: firstDate, lastDate: lastDate);
+          context: context,
+          initialDate: _selectedDate,
+          firstDate: firstDate,
+          lastDate: lastDate);
 
       setState(() {
-        _selectedDate = pickedDate;
+        _selectedDate = pickedDate ?? _selectedDate;
       });
     }
 
@@ -79,6 +80,8 @@ class _AddExpensesState extends State<AddExpenses> {
         children: [
           TextField(
             maxLength: 50,
+            style: TextStyle(
+                color: Theme.of(context).textTheme.titleMedium?.color),
             decoration: const InputDecoration(hintText: "Expense Title"),
             controller: _textcontroller,
           ),
@@ -86,10 +89,11 @@ class _AddExpensesState extends State<AddExpenses> {
             children: [
               Expanded(
                 child: TextField(
+                  style: TextStyle(
+                      color: Theme.of(context).textTheme.titleMedium?.color),
                   decoration: const InputDecoration(hintText: "Amount"),
                   keyboardType: TextInputType.number,
                   controller: _amountcontroller,
-                  
                 ),
               ),
               const SizedBox(
@@ -100,9 +104,7 @@ class _AddExpensesState extends State<AddExpenses> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                    _selectedDate == null
-                        ? "Please Choose Date"
-                        : formatter.format(_selectedDate!),
+                    formatter.format(_selectedDate),
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   IconButton(
@@ -120,18 +122,23 @@ class _AddExpensesState extends State<AddExpenses> {
               DropdownButton(
                 items: Categorys.values
                     .map((e) => DropdownMenuItem(
-
                         value: e,
                         child:
                             Text(e.toString().toUpperCase().split('.').last)))
                     .toList(),
                 value: _selectedCategories,
                 onChanged: (newvalue) {
-                  setState(() {
-                    _selectedCategories = newvalue!;
-                  });
+                  setState(
+                    () {
+                      _selectedCategories = newvalue!;
+                    },
+                  );
                 },
                 style: Theme.of(context).textTheme.titleMedium,
+                icon: Icon(
+                  Icons.arrow_drop_down,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
               const SizedBox(
                 width: 60,
