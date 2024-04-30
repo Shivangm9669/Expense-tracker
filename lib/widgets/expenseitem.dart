@@ -18,7 +18,7 @@ class ExpenseInfo extends StatelessWidget {
           children: [
             Text(
               expense.expenseTitle,
-              style: Theme.of(context).textTheme.titleMedium ,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
               height: 4,
@@ -27,18 +27,21 @@ class ExpenseInfo extends StatelessWidget {
               children: [
                 Text(
                   'Amount ${expense.expenseAmount}',
-                  style: Theme.of(context).textTheme.titleMedium ,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const Spacer(),
                 Row(
                   children: [
-                    Icon(categoryIcon[expense.expenseCategory]),
+                    Icon(
+                      categoryIcon[expense.expenseCategory],
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                     const SizedBox(
                       width: 8,
                     ),
                     Text(
                       expense.formattedDate,
-                      style: Theme.of(context).textTheme.titleMedium ,
+                      style: Theme.of(context).textTheme.titleMedium,
                     )
                   ],
                 )

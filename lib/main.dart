@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ColorScheme kcolorschema =
-        ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
+        ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 146, 199, 212));
 
     final ColorScheme kDarkSchema =
         ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 5, 99, 125));
@@ -54,7 +54,6 @@ class MyApp extends StatelessWidget {
                     color: kcolorschema.onSecondaryContainer,
                     fontSize: 16)),
             inputDecorationTheme: InputDecorationTheme(
-              
                 hintStyle: Theme.of(context).textTheme.titleMedium)),
         home: const ExpenseTrackerMainPage());
   }

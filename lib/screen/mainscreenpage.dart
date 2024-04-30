@@ -3,6 +3,7 @@ import 'package:expense_tracker/widgets/add_expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenseitem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ExpenseTrackerMainPage extends StatefulWidget {
   const ExpenseTrackerMainPage({super.key});
@@ -78,6 +79,7 @@ class _ExpenseTrackerMainPageState extends State<ExpenseTrackerMainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.height;
     Widget mainContent =
         const Center(child: Text('There is NO Expense Added yet'));
 
@@ -110,16 +112,27 @@ class _ExpenseTrackerMainPageState extends State<ExpenseTrackerMainPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Expense Tracker'),
-        actions: [
-          IconButton(onPressed: addExpense, icon: const Icon(Icons.add))
-        ],
       ),
-      body: Column(children: [
-        Chart(expenses: _expensesList),
-        Expanded(
-          child: mainContent,
-        ),
-      ]),
+      body: width > 600
+          ? Column(children: [
+              Chart(expenses: _expensesList),
+              Expanded(
+                child: mainContent,
+              ),
+            ])
+          : Row(
+              children: [
+                Expanded(child: Chart(expenses: _expensesList)),
+                Expanded(
+                  child: mainContent,
+                ),
+              ],
+            ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: addExpense,
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
     );
   }
 }

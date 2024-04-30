@@ -74,95 +74,103 @@ class _AddExpensesState extends State<AddExpenses> {
       });
     }
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 48, 20, 20),
-      child: Column(
-        children: [
-          TextField(
-            maxLength: 50,
-            style: TextStyle(
-                color: Theme.of(context).textTheme.titleMedium?.color),
-            decoration: const InputDecoration(hintText: "Expense Title"),
-            controller: _textcontroller,
-          ),
-          Row(
+    final keyboardspace = MediaQuery.of(context).viewInsets.bottom;
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(16, 48, 16, keyboardspace + 20),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Expanded(
-                child: TextField(
-                  style: TextStyle(
-                      color: Theme.of(context).textTheme.titleMedium?.color),
-                  decoration: const InputDecoration(hintText: "Amount"),
-                  keyboardType: TextInputType.number,
-                  controller: _amountcontroller,
-                ),
+              TextField(
+                maxLength: 50,
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.titleMedium?.color),
+                decoration: const InputDecoration(hintText: "Expense Title"),
+                controller: _textcontroller,
               ),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Row(
                 children: [
-                  Text(
-                    formatter.format(_selectedDate),
-                    style: Theme.of(context).textTheme.titleMedium,
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(
+                          color:
+                              Theme.of(context).textTheme.titleMedium?.color),
+                      decoration: const InputDecoration(hintText: "Amount"),
+                      keyboardType: TextInputType.number,
+                      controller: _amountcontroller,
+                    ),
                   ),
-                  IconButton(
-                      onPressed: presentDate,
-                      icon: const Icon(Icons.calendar_month_outlined))
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        formatter.format(_selectedDate),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      IconButton(
+                          onPressed: presentDate,
+                          icon: const Icon(Icons.calendar_month_outlined))
+                    ],
+                  ))
                 ],
-              ))
-            ],
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              DropdownButton(
-                items: Categorys.values
-                    .map((e) => DropdownMenuItem(
-                        value: e,
-                        child:
-                            Text(e.toString().toUpperCase().split('.').last)))
-                    .toList(),
-                value: _selectedCategories,
-                onChanged: (newvalue) {
-                  setState(
-                    () {
-                      _selectedCategories = newvalue!;
-                    },
-                  );
-                },
-                style: Theme.of(context).textTheme.titleMedium,
-                icon: Icon(
-                  Icons.arrow_drop_down,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
               ),
               const SizedBox(
-                width: 60,
+                height: 20,
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: TextButton.styleFrom(
-                    // backgroundColor: const Color.fromARGB(255, 199, 227, 240),
-                    foregroundColor: Colors.black),
-                child: const Text(
-                  "Cancel",
-                ),
-              ),
-              ElevatedButton(
-                onPressed: addExpenseToList,
-                child: const Text(
-                  "Save",
-                ),
+              Row(
+                children: [
+                  DropdownButton(
+                    items: Categorys.values
+                        .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(
+                                e.toString().toUpperCase().split('.').last)))
+                        .toList(),
+                    value: _selectedCategories,
+                    onChanged: (newvalue) {
+                      setState(
+                        () {
+                          _selectedCategories = newvalue!;
+                        },
+                      );
+                    },
+                    style: Theme.of(context).textTheme.titleMedium,
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 60,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    style: TextButton.styleFrom(
+                        // backgroundColor: const Color.fromARGB(255, 199, 227, 240),
+                        foregroundColor: Colors.black),
+                    child: const Text(
+                      "Cancel",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: addExpenseToList,
+                    child: const Text(
+                      "Save",
+                    ),
+                  )
+                ],
               )
             ],
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
