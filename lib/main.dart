@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
 
     final ColorScheme kDarkSchema =
         ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 5, 99, 125));
+        
     return MaterialApp(
         darkTheme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,

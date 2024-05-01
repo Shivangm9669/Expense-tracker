@@ -79,7 +79,7 @@ class _AddExpensesState extends State<AddExpenses> {
       height: double.infinity,
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.fromLTRB(16, 48, 16, keyboardspace + 20),
+        padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardspace + 20),
         child: SingleChildScrollView(
           child: Column(
             children: [

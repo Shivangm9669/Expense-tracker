@@ -3,7 +3,6 @@ import 'package:expense_tracker/widgets/add_expense.dart';
 import 'package:expense_tracker/widgets/chart/chart.dart';
 import 'package:expense_tracker/widgets/expenseitem.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ExpenseTrackerMainPage extends StatefulWidget {
   const ExpenseTrackerMainPage({super.key});
@@ -70,6 +69,7 @@ class _ExpenseTrackerMainPageState extends State<ExpenseTrackerMainPage> {
 
   void addExpense() {
     showModalBottomSheet(
+        useSafeArea: true,
         isScrollControlled: true,
         context: context,
         builder: (ctx) => AddExpenses(
